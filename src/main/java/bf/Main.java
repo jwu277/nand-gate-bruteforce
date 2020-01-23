@@ -8,15 +8,14 @@ import java.util.Set;
 
 public class Main {
 
-    private static final int TARGET_GATES = 10;
+    private static final int TARGET_GATES = 9;
 
     // 2 bit -> 7 segment decoder: 6321
     private static final Set<Word> TARGET_SET = new HashSet<Word>(Arrays.asList(
             new Word(false, false, true, false),
             new Word(false, false, false, true),
             new Word(true, false, false, false),
-            new Word(false, true, true, true),
-            new Word(false, true, false, true)));
+            new Word(false, true, true, true)));
 
     private static NandBlob search() {
 

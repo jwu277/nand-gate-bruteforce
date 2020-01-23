@@ -94,11 +94,6 @@ public class NandBlob {
             return next;
         }
 
-        // Heuristic pruning (DIRTY)
-        if (idCounter >= 7 && wordsContained < 3) {
-            return next;
-        }
-
         for (NandNode m : blob) {
             for (NandNode n : blob) {
                 next.add(nextBlob(m.id, n.id));
