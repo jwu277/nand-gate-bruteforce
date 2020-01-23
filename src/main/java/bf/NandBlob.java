@@ -11,15 +11,28 @@ public class NandBlob {
     private NandNode in0 = new NandNode(0);
     private NandNode in1 = new NandNode(1);
 
+    private static int TARGET_GATES;
+    private static int TARGET_WORDS;
+
     private int idCounter = 2;
 
     private Queue<NandNode> blob = new LinkedList<NandNode>();
 
     private Set<Word> words = new HashSet<Word>();
 
+    private int wordsContained = 0;
+
+    private boolean dead = false;
+
     public NandBlob() {
         blob.add(in0);
         blob.add(in1);
+    }
+
+    public NandBlob(int target_gates, int target_words){
+        this();
+        TARGET_GATES = target_gates;
+        TARGET_WORDS = target_words;
     }
 
     private NandNode searchById(int id) {
@@ -61,7 +74,12 @@ public class NandBlob {
         NandNode n = new NandNode(searchById(idL), searchById(idR), idCounter);
 
         blob.add(n);
-        words.add(getWord(n));
+
+        Word nextWord = getWord(n);
+        if (words.contains(nextWord)) {
+            dead = true;
+        }
+        words.add(nextWord);
 
         idCounter++;
 
@@ -70,6 +88,16 @@ public class NandBlob {
     public Set<NandBlob> nextGen() {
 
         Set<NandBlob> next = new HashSet<NandBlob>();
+
+        // Don't continue if no hope
+        if (dead || (idCounter + (TARGET_WORDS - wordsContained) > TARGET_GATES)) {
+            return next;
+        }
+
+        // Heuristic pruning (DIRTY)
+        if (idCounter >= 7 && wordsContained < 3) {
+            return next;
+        }
 
         for (NandNode m : blob) {
             for (NandNode n : blob) {
@@ -108,13 +136,15 @@ public class NandBlob {
 
     public boolean containsWords(Set<Word> target) {
 
+        wordsContained = 0;
+
         for (Word w : target) {
-            if (!words.contains(w)) {
-                return false;
+            if (words.contains(w)) {
+                wordsContained++;
             }
         }
 
-        return true;
+        return wordsContained == target.size();
 
     }
 
