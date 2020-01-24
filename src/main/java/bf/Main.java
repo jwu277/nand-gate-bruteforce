@@ -13,6 +13,7 @@ public class Main {
     // 2 bit -> 7 segment decoder: 6321
     private static final Set<Word> TARGET_SET = new HashSet<Word>(Arrays.asList(
             new Word(false, false, true, false),
+            // new Word(false, true, false, true),
             new Word(false, false, false, true),
             new Word(true, false, false, false),
             new Word(false, true, true, true)));
@@ -46,7 +47,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        System.out.println("Solution:");
+        System.out.println("Computing...");
         System.out.println(search());
     }
 

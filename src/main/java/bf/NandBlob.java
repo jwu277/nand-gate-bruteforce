@@ -49,8 +49,8 @@ public class NandBlob {
 
     private Word getWord(NandNode n) {
 
-        in0.setVal(false);
-        in1.setVal(false);
+        in0.setVal(true);
+        in1.setVal(true);
         boolean res0 = n.eval();
 
         in0.setVal(false);
@@ -61,8 +61,8 @@ public class NandBlob {
         in1.setVal(false);
         boolean res2 = n.eval();
 
-        in0.setVal(true);
-        in1.setVal(true);
+        in0.setVal(false);
+        in1.setVal(false);
         boolean res3 = n.eval();
 
         return new Word(res0, res1, res2, res3);
